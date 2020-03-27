@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<title>Rank Chart</title>
+		<style>
+		</style>
+		<script src="js/d3-v4.js"></script>	
+		<script src="data/data_dummy.js"></script>
+		<script src="js/RankCompare.js"></script>	
+	</head>
+	<body>
+		<div id="chart" style="width:95%; height:95%"></div>
+		<!--script>
+			// used from server
+			d3.csv("data/data.csv", function(data){
+				console.log(data);
+			});
+		</script-->
+		
+		<script>
+			RankCompare(d3.select('#chart'), data, "Rank Comparison Chart");
+		</script>
+	</body>
+</html>
