@@ -1,14 +1,20 @@
 <html>
 	<head>
-		<title>Rank Chart</title>
+		<title>Rank Comparison Chart</title>
 		<style>
 		</style>
 		<script src="js/d3-v4.js"></script>	
-		<script src="data/data_dummy.js"></script>
+		<script src="data/data.js"></script>
+		<script src="data/data_database.js"></script>
+		<script src="data/data_platform.js"></script>
+		<script src="data/data_webframe.js"></script>
 		<script src="js/RankCompare.js"></script>	
 	</head>
 	<body>
 		<div id="chart" style="width:95%; height:95%"></div>
+		<div id="chart_database" style="margin-top:5%; width:95%; height:95%"></div>
+		<div id="chart_platform" style="margin-top:5%; width:95%; height:95%"></div>
+		<div id="chart_webframe" style="margin-top:5%; width:95%; height:95%"></div>
 		<!--script>
 			// used from server
 			d3.csv("data/data.csv", function(data){
@@ -17,7 +23,38 @@
 		</script-->
 		
 		<script>
-			RankCompare(d3.select('#chart'), data, "Rank Comparison Chart");
+			RankCompare({'divElement': d3.select('#chart'), 
+						'dataArr':data, 
+						'title':"Rank Comparison Chart: Top Languages",
+						//'topN':8,
+						'format':"percent",
+						'leftTitle':"Worked in 2019",
+						'rightTitle':"Desire to work in 2020"
+						});
+			RankCompare({'divElement': d3.select('#chart_database'), 
+						'dataArr':data_database, 
+						'title':"Rank Comparison Chart: Top Databases",
+						//'topN':8,
+						'format':"percent",
+						'leftTitle':"Worked in 2019",
+						'rightTitle':"Desire to work in 2020"
+						});
+			RankCompare({'divElement': d3.select('#chart_platform'), 
+						'dataArr':data_platform, 
+						'title':"Rank Comparison Chart: Top Platforms",
+						//'topN':8,
+						'format':"percent",
+						'leftTitle':"Worked in 2019",
+						'rightTitle':"Desire to work in 2020"
+						});
+			RankCompare({'divElement': d3.select('#chart_webframe'), 
+						'dataArr':data_webframe, 
+						'title':"Rank Comparison Chart: Top Web Frames",
+						//'topN':8,
+						'format':"percent",
+						'leftTitle':"Worked in 2019",
+						'rightTitle':"Desire to work in 2020"
+						});
 		</script>
 	</body>
 </html>
