@@ -1,77 +1,147 @@
 var data = [
   {
-    "Name": "Russia",
-    "Current": 1036,
-    "Next": 1434
+    "Name": "JavaScript",
+    "Current": 0.6663,
+    "Next": 0.5033
   },
   {
-    "Name": "Canada",
-    "Current": 1428,
-    "Next": 1117
+    "Name": "HTML/CSS",
+    "Current": 0.624,
+    "Next": 0.4123
   },
   {
-    "Name": "United States",
-    "Current": 1264,
-    "Next": 1371
+    "Name": "SQL",
+    "Current": 0.5349,
+    "Next": 0.3776
   },
   {
-    "Name": "China",
-    "Current": 1251,
-    "Next": 1126
+    "Name": "Python",
+    "Current": 0.41,
+    "Next": 0.4501
   },
   {
-    "Name": "Brazil",
-    "Current": 1272,
-    "Next": 1269
+    "Name": "Java",
+    "Current": 0.4041,
+    "Next": 0.2645
   },
   {
-    "Name": "Australia",
-    "Current": 1328,
-    "Next": 1215
+    "Name": "Bash/Shell/PowerShell",
+    "Current": 0.3599,
+    "Next": 0.2397
   },
   {
-    "Name": "India",
-    "Current": 1152,
-    "Next": 1135
+    "Name": "C#",
+    "Current": 0.3049,
+    "Next": 0.2526
   },
   {
-    "Name": "Argentina",
-    "Current": 1339,
-    "Next": 1081
+    "Name": "PHP",
+    "Current": 0.2591,
+    "Next": 0.1444
   },
   {
-    "Name": "Kazakhstan",
-    "Current": 1169,
-    "Next": 1292
+    "Name": "C++",
+    "Current": 0.2309,
+    "Next": 0.1896
   },
   {
-    "Name": "Mexico",
-    "Current": 1473,
-    "Next": 1454
+    "Name": "TypeScript",
+    "Current": 0.2084,
+    "Next": 0.2669
   },
   {
-    "Name": "Saudi Arabia",
-    "Current": 1313,
-    "Next": 1243
+    "Name": "C",
+    "Current": 0.2027,
+    "Next": 0.1254
   },
   {
-    "Name": "Indonesia",
-    "Current": 1097,
-    "Next": 1205
+    "Name": "Others:",
+    "Current": 0.0891,
+    "Next": 0.089
   },
   {
-    "Name": "Iran",
-    "Current": 1214,
-    "Next": 1395
+    "Name": "Ruby",
+    "Current": 0.0825,
+    "Next": 0.0816
   },
   {
-    "Name": "Mongolia",
-    "Current": 1366,
-    "Next": 1072
+    "Name": "Go",
+    "Current": 0.081,
+    "Next": 0.1919
   },
   {
-    "Name": "Peru",
-    "Current": 1255,
-    "Next": 1484
+    "Name": "Assembly",
+    "Current": 0.0656,
+    "Next": 0.0524
+  },
+  {
+    "Name": "Swift",
+    "Current": 0.0646,
+    "Next": 0.099
+  },
+  {
+    "Name": "Kotlin",
+    "Current": 0.0632,
+    "Next": 0.1492
+  },
+  {
+    "Name": "R",
+    "Current": 0.0568,
+    "Next": 0.0758
+  },
+  {
+    "Name": "VBA",
+    "Current": 0.0538,
+    "Next": 0.0185
+  },
+  {
+    "Name": "Objective-C",
+    "Current": 0.0472,
+    "Next": 0.0321
+  },
+  {
+    "Name": "Scala",
+    "Current": 0.0372,
+    "Next": 0.0626
+  },
+  {
+    "Name": "Rust",
+    "Current": 0.0314,
+    "Next": 0.1181
+  },
+  {
+    "Name": "Dart",
+    "Current": 0.0189,
+    "Next": 0.0498
+  },
+  {
+    "Name": "nan",
+    "Current": 0.0148,
+    "Next": 0.0539
+  },
+  {
+    "Name": "Elixir",
+    "Current": 0.0142,
+    "Next": 0.0426
+  },
+  {
+    "Name": "Clojure",
+    "Current": 0.0141,
+    "Next": 0.031
+  },
+  {
+    "Name": "WebAssembly",
+    "Current": 0.0114,
+    "Next": 0.095
+  },
+  {
+    "Name": "F#",
+    "Current": 0.0109,
+    "Next": 0.0396
+  },
+  {
+    "Name": "Erlang",
+    "Current": 0.0087,
+    "Next": 0.0239
   }
 ];

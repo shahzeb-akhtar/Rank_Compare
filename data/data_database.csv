@@ -1,0 +1,14 @@
+﻿Name,Current,Next
+MySQL,0.4561,0.2897
+PostgreSQL,0.2898,0.2975
+Microsoft SQL Server,0.2767,0.1825
+SQLite,0.2668,0.2003
+MongoDB,0.2149,0.2663
+Redis,0.1572,0.2015
+MariaDB,0.1395,0.1123
+Oracle,0.139,0.0821
+Elasticsearch,0.1206,0.1737
+Firebase,0.1081,0.1341
+DynamoDB,0.0521,0.0689
+Cassandra,0.0292,0.0681
+Couchbase,0.0171,0.0278

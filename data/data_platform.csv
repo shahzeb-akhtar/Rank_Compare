@@ -1,0 +1,17 @@
+﻿Name,Current,Next
+Linux,0.481,0.4745
+Windows,0.4571,0.3174
+Docker,0.2837,0.3709
+Android,0.2435,0.2784
+AWS,0.2397,0.2959
+MacOS,0.2003,0.1961
+Slack,0.1881,0.1524
+Raspberry Pi,0.1371,0.1999
+WordPress,0.1305,0.0741
+iOS,0.1175,0.1631
+Google Cloud Platform,0.1117,0.1791
+Microsoft Azure,0.1072,0.1339
+Arduino,0.0961,0.1254
+Heroku,0.0959,0.0847
+Kubernetes,0.0769,0.2002
+IBM Cloud or Watson,0.017,0.033
