@@ -1,13 +1,17 @@
 /*
 Creates an interactive Rank Compare Chart
-	inputs:
+	input - objConfig with the following properties:
 		divElement - d3 selection of div in which to creat chart
 		dataArr - data to be charted
 			'Name', 'Current', and 'Next' are required columns.
 		title - Title for the chart
 		topN - number of names to show - even if data contains more than topN values
+		titleLeft,
+		titleRight,
+		format - options - int, float, percent
 */
-function RankCompare(divElement, dataArr, title = 'Rank Comparison Chart', topN = 10){
+function RankCompare(configObj){
+	console.log(configObj);
 	let resizeTimer,
 		wSvg,
 		hSvg,
@@ -22,14 +26,56 @@ function RankCompare(divElement, dataArr, title = 'Rank Comparison Chart', topN 
 		scaleRightX = d3.scaleLinear(),
 		scaleY = d3.scaleLinear(),
 		parentResizeFunction,
-		marginPercent = {top:0.025, right:0.05, bottom:0.05, left:0.025};
+		maxVal = 0,
+		topTextElem,
+		marginPercent = {top:0.075, right:0.05, bottom:0.15, left:0.025};
 		
+	let divElement = configObj.divElement, // required 
+			dataArr = configObj.dataArr, // required 
+			title = 'Rank Comparison Chart', 
+			topN = 10,
+			leftTitle,
+			rightTitle,
+			format;
+			
+			if(configObj.title){
+				title = configObj.title;
+			}
+			if(configObj.topN){
+				topN = configObj.topN;
+			}
+			if(configObj.leftTitle){
+				leftTitle = configObj.leftTitle;
+			}
+			if(configObj.title){
+				rightTitle = configObj.rightTitle;
+			}
+			if(configObj.format){
+				switch(configObj.format){
+					case 'int':
+						format = d3.format(",d");
+						break;
+					case 'float':
+						format = d3.format(".2f");
+						break;
+					case 'percent':
+						format = d3.format(".2%");
+						break;
+				}
+			}
+			
 	const colors10 = d3.schemeCategory10,
 			greenColor = colors10[2],
 			redColor = colors10[3],
-			lightGreenColor = d3.color(greenColor).brighter(1),
-			lighterRedColor = d3.color(redColor).brighter(1),
-			greyColor = colors10[7];
+			lightGreenColor = colors10[8],
+			lighterRedColor = colors10[6],
+			greyColor = colors10[7]
+			// colors from Chroma.js Color Palette Helper
+			//https://gka.github.io/palettes/#/5|d|185d4f,96ffea,c6c6a9|ffffe0,ef3863,aa0a00|1|1
+			//divergingColors = ['#005a74', '#68afb1', '#ffffe0', '#ff978d', '#ce3600']
+			//divergingColors = ['#005a74', '#5da5aa', '#e9e9cb', '#ff978d', '#ce3600'],
+			//divergingColors = ['#035d57', '#58a598', '#e6e6c7', '#fc7f7b', '#aa0a00'],
+			divergingColors = ['#185d4f', '#4c9685', '#c6c6a9', '#f3857d', '#aa0a00'];
 	
 	divElement.style('font-family', 'Helvetica');
 	
@@ -64,15 +110,14 @@ function RankCompare(divElement, dataArr, title = 'Rank Comparison Chart', topN 
 		if(wSvg < 100){
 			wSvg = 100;
 		}
-		scaleLeftX.range([marginPercent.left*wSvg + 0.4*wSvg*(1 - marginPercent.left - marginPercent.right), marginPercent.left*wSvg]);
-		scaleRightX.range([marginPercent.left*wSvg + 0.6*wSvg*(1 - marginPercent.left - marginPercent.right), wSvg*(1 -  marginPercent.right)]);
+		scaleLeftX.range([marginPercent.left*wSvg + 0.45*wSvg*(1 - marginPercent.left - marginPercent.right), marginPercent.left*wSvg]);
+		scaleRightX.range([marginPercent.left*wSvg + 0.55*wSvg*(1 - marginPercent.left - marginPercent.right), wSvg*(1 -  marginPercent.right)]);
 		scaleY.range([marginPercent.top*hSvg, hSvg - (marginPercent.bottom*hSvg)]);
 		createChart();
 	}
 	
 	function understandData(){
-		let maxVal = 0;
-		data.forEach(function(dd, di){
+		dataArr.forEach(function(dd, di){
 			if(allNames.indexOf(dd.Name) < 0){
 				allNames.push(dd.Name);
 				namesByCurrentRank.push(dd.Name);
@@ -103,49 +148,86 @@ function RankCompare(divElement, dataArr, title = 'Rank Comparison Chart', topN 
 	}
 	
 	function namesMouseOver(d){
-		svgElem.selectAll("g.viz_g").each(function(dIn, di){
+		let textToShow = '',
+			rankGain = namesByCurrentRank.indexOf(d.name) - namesByNextRank.indexOf(d.name);
+		if(rankGain === 0){
+			textToShow = '&hArr;'
+		}else if(rankGain > 0){
+			textToShow = '&uArr; ' + rankGain;
+		}else{
+			textToShow = '&dArr; ' + Math.abs(rankGain);
+		}
+		svgElem.selectAll("g.viz_g").each(function(dIn){
 			if(dIn.name === d.name){
 				d3.select(this).raise()
 					.style("opacity", 1);
-				d3.select(this).selectAll(".hidden_text").style("display", null);
 			}else{
 				d3.select(this).style("opacity", 0.1);
 			}
 		});
-		if(otherNamesArr.indexOf(d.name) >= 0){
-			// show name
-			otherGElem.select("text").text(d.name);
-			otherGElem.style("opacity", 1).style("display", null);
-		}
+		svgElem.selectAll("g.legend_g").each(function(dIn){
+			if(dIn.color === d.color){
+				d3.select(this).style("opacity", 1);
+			}else{
+				d3.select(this).style("opacity", 0.1);
+			}
+		});
+		topTextElem.html(textToShow);
 	}
 	
 	function namesMouseOut(d){
-		svgElem.selectAll("g.viz_g").each(function(dIn, di){
-			d3.select(this).style("opacity", 0.8);
-			d3.select(this).selectAll(".hidden_text").style("display", "none");
-		});
-		otherGElem.style("display", "none");
+		svgElem.selectAll("g.viz_g").style("opacity", 0.8);
+		svgElem.selectAll("g.legend_g").style("opacity", 0.8);
+		topTextElem.text("");
 	}
 	
 	function createChart(){
-		let strokeWidth = (hSvg*0.15)/bottomRank;
-		let rectHeight = hSvg/(bottomRank * 2.5);
-		let fontSize = hSvg/40;
+		let strokeWidth = (hSvg*0.05)/bottomRank,
+			rectHeight = hSvg/(bottomRank * 3),
+			fontSize = hSvg/(4 * bottomRank),
+			color,
+			rectTextXAdjust, // it would we +/-5
+			rectTextAnchor; // start/end
+		
+		
 		svgElem = divElement.append("svg").attr("width", wSvg).attr("height", hSvg);
 		namesByCurrentRank.forEach(function(nc, ni){
 			let nn = namesByNextRank.indexOf(nc); // index in namesByNextRank
-			console.log(nn);
+			if(nn === ni){
+				color = divergingColors[2];
+			}else{
+				if(Math.abs(nn - ni) < 3){
+					if(nn > ni){
+						color = divergingColors[3];
+					}else{
+						color = divergingColors[1];
+					}
+				}else{
+					if(nn > ni){
+						color = divergingColors[4];
+					}else{
+						color = divergingColors[0];
+					}
+				}
+			}
+			
+			// to avoid making the connecting lines go over legend on mouse over raise
+			let nonLegendG = svgElem.append("g");
+			
 			// dont' go beyond bottomRank
 			if(ni > bottomRank - 1 && nn > bottomRank - 1) return;
-			let g = svgElem.append("g")
-							.attr("class", "g_viz")
-							.datum({"name":nc});
+			let g = nonLegendG.append("g")
+							.attr("class", "viz_g")
+							.datum({"name":nc, "color":color})
+							.style("opacity", 0.8)
+							.on("mouseover", namesMouseOver)
+							.on("mouseout", namesMouseOut);
 							
 			// create left side bar with name
 			if(ni <= bottomRank - 1){
 				g.append("text")
 					.attr("x", scaleLeftX(0))
-					.attr("y", scaleY(ni + 1) - 5)
+					.attr("y", scaleY(ni + 1) - (hSvg * 0.01))
 					.attr("text-anchor", "end")
 					.style("font-size", fontSize)
 					.text(nc);
@@ -155,39 +237,38 @@ function RankCompare(divElement, dataArr, title = 'Rank Comparison Chart', topN 
 					.attr("y", scaleY(ni + 1))
 					.attr("width", scaleLeftX(0) - scaleLeftX(nameValueObj[nc][0]))
 					.attr("height", rectHeight)
-					.style("fill", colors10[0])
+					.style("fill", color);
+				
+				if(nameValueObj[nc][0] > maxVal/2){
+					rectTextXAdjust = +5;
+					rectTextAnchor = "start";
+				}else{
+					rectTextXAdjust = -5;
+					rectTextAnchor = "end";
+				}				
+				g.append("text")
+					.attr("x", scaleLeftX(nameValueObj[nc][0]) + rectTextXAdjust)
+					.attr("y", scaleY(ni + 1) + rectHeight/2)
+					.attr("text-anchor", rectTextAnchor)
+					.style("font-size", fontSize/1.5)
+					.attr("dominant-baseline", "central")
+					.text(format(nameValueObj[nc][0]));	
 			}
 			
 			// create line
 			g.append("line")
 				.attr("x1", scaleLeftX(0))
 				.attr("x2", scaleRightX(0))
-				.attr("y1", scaleY(ni + 1))
-				.attr("y2", scaleY(nn + 1))
-				.attr("stroke", function(){
-					if(nn === ni){
-						return greyColor;
-					}
-					if(Math.abs(nn - ni) < 3){
-						if(nn > ni){
-							return lighterRedColor;
-						}else{
-							return lightGreenColor;
-						}
-					}else{
-						if(nn > ni){
-							return redColor;
-						}else{
-							return greenColor;
-						}
-					}
-				});
+				.attr("y1", scaleY(ni + 1) + rectHeight/2)
+				.attr("y2", scaleY(nn + 1) + rectHeight/2)
+				.attr("stroke-width", strokeWidth)
+				.attr("stroke", color);
 			
 			// create right side bar with name
 			if(nn <= bottomRank - 1){
 				g.append("text")
 					.attr("x", scaleRightX(0))
-					.attr("y", scaleY(nn + 1) - 5)
+					.attr("y", scaleY(nn + 1) - (hSvg * 0.01))
 					.style("font-size", fontSize)
 					.text(nc);
 					
@@ -196,10 +277,102 @@ function RankCompare(divElement, dataArr, title = 'Rank Comparison Chart', topN 
 					.attr("y", scaleY(nn + 1))
 					.attr("width", scaleRightX(nameValueObj[nc][1]) - scaleRightX(0))
 					.attr("height", rectHeight)
-					.style("fill", colors10[0])
+					.style("fill", color);
+					
+				if(nameValueObj[nc][1] > maxVal/2){
+					rectTextXAdjust = -5;
+					rectTextAnchor = "end";
+				}else{
+					rectTextXAdjust = +5;
+					rectTextAnchor = "start";
+				}
+				
+				g.append("text")
+					.attr("x", scaleRightX(nameValueObj[nc][1]) + rectTextXAdjust)
+					.attr("y", scaleY(nn + 1) + rectHeight/2)
+					.attr("text-anchor", rectTextAnchor)
+					.style("font-size", fontSize/1.5)
+					.attr("dominant-baseline", "central")
+					.text(format(nameValueObj[nc][1]));
 			}
 			
+			// create circles
+			g.append("circle")
+				.attr("cx", scaleLeftX(0))
+				.attr("cy", scaleY(ni + 1) + rectHeight/2)
+				.attr("r", rectHeight/2.1)
+				.attr("stroke-width", strokeWidth)
+				.attr("stroke", color)
+				.style("fill", "white");
+			
+			g.append("circle")
+				.attr("cx", scaleRightX(0))
+				.attr("cy", scaleY(nn + 1) + rectHeight/2)
+				.attr("r", rectHeight/2.1)
+				.attr("stroke-width", strokeWidth)
+				.attr("stroke", color)
+				.style("fill", "white");				
+			
 		});
+		//create titles
+		if(leftTitle){
+			svgElem.append("text")
+					.attr("x", scaleLeftX(0))
+					.attr("y", (hSvg*marginPercent.top)/2)
+					.attr("text-anchor", "end")
+					.style("font-size", fontSize)
+					.style("font-weight", "bold")
+					.text(leftTitle);
+		}
+		if(rightTitle){
+			svgElem.append("text")
+					.attr("x", scaleRightX(0))
+					.attr("y", (hSvg*marginPercent.top)/2)
+					.style("font-size", fontSize)
+					.style("font-weight", "bold")
+					.text(rightTitle);
+		}
+		// create legend
+		let legendG = svgElem.append("g")
+								.attr("transform", "translate(0, " + (hSvg*(1 - marginPercent.bottom + 0.01) + rectHeight) + ")");
+		legendG.append("rect")
+				.attr("width", wSvg)
+				.attr("height", hSvg*marginPercent.bottom)
+				.style("fill", "white");
+		
+		let legendLabels = ["Rank up by 3+", "Rank up by 1 or 2", "Rank not changed", "Rank down by 1 or 2", "Rank down by 3+"],
+			legendGap = wSvg/5,
+			legendStart = legendGap/3,
+			legendRectSize = hSvg*0.02,
+			legendTextGap = wSvg*0.005;
+			
+		divergingColors.forEach(function(dc, di){
+			let g = legendG.append("g")
+							.attr("transform", "translate(" + (legendStart + (legendGap*di)) + "," + (hSvg * marginPercent.bottom * 0.4) + ")")
+							.attr("class", "legend_g")
+							.datum({"color":dc})
+							.style("opacity", 0.8);
+			g.append("rect")
+				.attr("width", legendRectSize)
+				.attr("height", legendRectSize)
+				.style("fill", dc);
+				
+			g.append("text")
+					.attr("x", legendRectSize + legendTextGap)
+					.attr("y", legendRectSize/2)
+					.style("font-size", fontSize/1.25)
+					.attr("dominant-baseline", "central")
+					.text(legendLabels[di]);
+		});
+		topTextElem = svgElem.append("text")
+								.attr("x", wSvg*(marginPercent.left + (1 - marginPercent.left - marginPercent.right)/2))
+								.attr("y", (hSvg*marginPercent.top)/2)
+								.attr("text-anchor", "middle")
+								.style("font-size", fontSize)
+								.style("fill", "gray")
+								.style("font-weight", "bold")
+								//.attr("dominant-baseline", "central");
+							
 	}
 	understandData();
 	resize();
