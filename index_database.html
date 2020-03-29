@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>Rank Comparison Chart</title>
+		<style>
+		</style>
+		<script src="js/d3-v4.js"></script>
+		<script src="data/data_database.js"></script>
+		<script src="js/RankCompare.js"></script>	
+	</head>
+	<body>
+		<div id="chart_database" style="width:95%; height:95%"></div>
+		<!--script>
+			// used from server
+			d3.csv("data/data.csv", function(data){
+				console.log(data);
+			});
+		</script-->
+		
+		<script>
+			RankCompare({'divElement': d3.select('#chart_database'), 
+						'dataArr':data_database, 
+						'title':"Rank Comparison Chart: Top Databases",
+						//'topN':8,
+						'format':"percent",
+						'leftTitle':"Worked in 2019",
+						'rightTitle':"Desire to work in 2020"
+						});
+		</script>
+	</body>
+</html>
