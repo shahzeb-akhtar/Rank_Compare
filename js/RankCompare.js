@@ -97,19 +97,27 @@ function RankCompare(configObj){
 	function resize(){
 		// remove previous chart, if any
 		divElement.selectAll("*").remove();
+		let w = divElement.node().clientWidth,
+			h = divElement.node().clientHeight;
 		
 		// append title
-		let titleElement = divElement.append("h2").text(title);
+		let titleElement = divElement.append("h2").style("font-size", (h/25)).text(title);
 		
 		// calculate width and height of svg
-		wSvg = divElement.node().clientWidth;
-		hSvg = divElement.node().clientHeight - titleElement.node().scrollHeight;
-		if(hSvg < 100){
-			hSvg = 100;
-		}
+		wSvg = w;
+		hSvg = h - titleElement.node().scrollHeight;
+
 		if(wSvg < 100){
 			wSvg = 100;
 		}
+		if(hSvg < 100){
+			hSvg = 100;
+		}
+		if(hSvg > wSvg){
+			hSvg = wSvg;
+		}
+		
+		
 		scaleLeftX.range([marginPercent.left*wSvg + 0.45*wSvg*(1 - marginPercent.left - marginPercent.right), marginPercent.left*wSvg]);
 		scaleRightX.range([marginPercent.left*wSvg + 0.55*wSvg*(1 - marginPercent.left - marginPercent.right), wSvg*(1 -  marginPercent.right)]);
 		scaleY.range([marginPercent.top*hSvg, hSvg - (marginPercent.bottom*hSvg)]);
