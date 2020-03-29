@@ -4,11 +4,11 @@
 		<style>
 		</style>
 		<script src="js/d3-v4.js"></script>
-		<script src="data/data.js"></script>
+		<script src="data/data_platform.js"></script>
 		<script src="js/RankCompare.js"></script>	
 	</head>
 	<body>
-		<div id="chart" style="width:95%; height:95%"></div>
+		<div id="chart_platform" style="width:95%; height:95%"></div>
 		<!--script>
 			// used from server
 			d3.csv("data/data.csv", function(data){
@@ -17,9 +17,9 @@
 		</script-->
 		
 		<script>
-			RankCompare({'divElement': d3.select('#chart'), 
-						'dataArr':data, 
-						'title':"Rank Comparison Chart: Top Languages",
+			RankCompare({'divElement': d3.select('#chart_platform'), 
+						'dataArr':data_platform, 
+						'title':"Rank Comparison Chart: Top Platforms",
 						//'topN':8,
 						'format':"percent",
 						'leftTitle':"Worked in 2019",
