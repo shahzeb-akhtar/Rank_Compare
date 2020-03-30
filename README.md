@@ -31,25 +31,25 @@ Given JSON array of object with the following properties, it creates an interact
 
 ```
 .
-├── data                                                    # Folder to hold data files
-    ├── data.csv                                            # Data for languages in CSV format
-    ├── data.js                                             # Data for languages in JSON format
-    ├── data_database.csv                                   # Data for database enviorments in CSV format
-    ├── data_database.js                                    # Data for database enviorments in JSON format 
-    ├── data_platform.csv                                   # Data for platforms in CSV format
-    ├── data_platform.js                                    # Data for platforms in JSON format 
-    ├── data_webframe.csv                                   # Data for web frameworks in CSV format
-    ├── data_webframe.js                                    # Data for web frameworks in JSON format 
-    ├── data_dummy.csv                                      # Dummy data to test in CSV format
-    ├── data_dummy.js                                       # Dummy data to test in JSON format 
-├── js                                                      # Folder to hold JS files
-    ├── d3-v4.js                                            # d3 v4 file
-    ├── RankCompare.js                                      # Main JS code for rank comparison chart creation
-├── index.html                                              # Index HTML file (creates comparison chart for Programming Languages)
-├── database.html                                           # Databases comparison chart HTML file
-├── platform.html                                           # Plaftforms comparison chart HTML file
-├── webframe.html                                           # Web Frameworks comparison chart HTML file
-├── README.md                                               # ReadMe file
+├── data                                         # Folder to hold data files
+    ├── data.csv                                 # Data for languages in CSV format
+    ├── data.js                                  # Data for languages in JSON format
+    ├── data_database.csv                        # Data for database enviorments in CSV format
+    ├── data_database.js                         # Data for database enviorments in JSON format 
+    ├── data_platform.csv                        # Data for platforms in CSV format
+    ├── data_platform.js                         # Data for platforms in JSON format 
+    ├── data_webframe.csv                        # Data for web frameworks in CSV format
+    ├── data_webframe.js                         # Data for web frameworks in JSON format 
+    ├── data_dummy.csv                           # Dummy data to test in CSV format
+    ├── data_dummy.js                            # Dummy data to test in JSON format 
+├── js                                           # Folder to hold JS files
+    ├── d3-v4.js                                 # d3 v4 file
+    ├── RankCompare.js                           # Main JS code for rank comparison chart creation
+├── index.html                                   # Index HTML file (creates comparison chart for Programming Languages)
+├── database.html                                # Databases comparison chart HTML file
+├── platform.html                                # Plaftforms comparison chart HTML file
+├── webframe.html                                # Web Frameworks comparison chart HTML file
+├── README.md                                    # ReadMe file
 
 ```
 
