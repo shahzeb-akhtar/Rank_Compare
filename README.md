@@ -1,4 +1,4 @@
-# Create a Rank Chart
+# Create a Rank Comparison Chart
 This project creates an interactive rank comparison chart
 
 ## Table of Contents
