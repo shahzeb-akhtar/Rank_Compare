@@ -181,6 +181,9 @@ function RankCompare(configObj){
 			}
 		});
 		topTextElem.html(textToShow);
+		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			setTimeout(namesMouseOut, 200);
+		}
 	}
 	
 	function namesMouseOut(d){
