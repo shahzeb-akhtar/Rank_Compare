@@ -16,6 +16,7 @@ function RankCompare(configObj){
 		wSvg,
 		hSvg,
 		svgElem,
+		isMobile = false,
 		allNames = [],
 		namesByCurrentRank = [],
 		namesByNextRank = [],
@@ -29,7 +30,9 @@ function RankCompare(configObj){
 		maxVal = 0,
 		topTextElem,
 		marginPercent = {top:0.075, right:0.05, bottom:0.15, left:0.025};
-		
+	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		isMobile = true;
+	}	
 	let divElement = configObj.divElement, // required 
 			dataArr = configObj.dataArr, // required 
 			title = 'Rank Comparison Chart', 
@@ -156,6 +159,9 @@ function RankCompare(configObj){
 	}
 	
 	function namesMouseOver(d){
+		if(isMobile && mouseTimer){
+			clearTimeout(mouseTimer);
+		}
 		let textToShow = '',
 			rankGain = namesByCurrentRank.indexOf(d.name) - namesByNextRank.indexOf(d.name);
 		if(rankGain === 0){
@@ -181,8 +187,8 @@ function RankCompare(configObj){
 			}
 		});
 		topTextElem.html(textToShow);
-		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-			setTimeout(namesMouseOut, 5000);
+		if(isMobile){
+			mouseTimer = setTimeout(namesMouseOut, 2000);
 		}
 	}
 	
