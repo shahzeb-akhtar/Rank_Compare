@@ -13,6 +13,7 @@ Creates an interactive Rank Compare Chart
 function RankCompare(configObj){
 	console.log(configObj);
 	let resizeTimer,
+		mouseTimer,
 		wSvg,
 		hSvg,
 		svgElem,
