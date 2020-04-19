@@ -102,10 +102,14 @@ function RankCompare(configObj){
 		// remove previous chart, if any
 		divElement.selectAll("*").remove();
 		let w = divElement.node().clientWidth,
-			h = divElement.node().clientHeight;
+			h = divElement.node().clientHeight,
+			titleFontSize = h/25;
 		
+		if(titleFontSize > 32){
+			titleFontSize = 32;
+		}
 		// append title
-		let titleElement = divElement.append("h2").style("font-size", (h/25)).text(title);
+		let titleElement = divElement.append("h2").style("font-size", titleFontSize).text(title);
 		
 		// calculate width and height of svg
 		wSvg = w;
@@ -207,6 +211,12 @@ function RankCompare(configObj){
 			rectTextXAdjust, // it would we +/-5
 			rectTextAnchor; // start/end
 		
+		if(fontSize > 24){
+			fontSize = 24;
+		}
+		if(fontSize < 6){
+			fontSize = 6;
+		}
 		
 		svgElem = divElement.append("svg").attr("width", wSvg).attr("height", hSvg);
 		namesByCurrentRank.forEach(function(nc, ni){
