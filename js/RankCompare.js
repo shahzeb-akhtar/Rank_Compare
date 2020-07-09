@@ -27,7 +27,6 @@ function RankCompare(configObj){
 		scaleLeftX = d3.scaleLinear(),
 		scaleRightX = d3.scaleLinear(),
 		scaleY = d3.scaleLinear(),
-		parentResizeFunction,
 		maxVal = 0,
 		topTextElem,
 		marginPercent = {top:0.075, right:0.05, bottom:0.15, left:0.025};
@@ -83,19 +82,11 @@ function RankCompare(configObj){
 	
 	divElement.style('font-family', 'Helvetica');
 	
-	// check if there is already a resize function
-	if(d3.select(window).on('resize')){
-		parentResizeFunction = d3.select(window).on('resize');
-	}
-	
 	d3.select(window).on('resize', function(){
 		if(resizeTimer){
 			clearTimeout(resizeTimer);
 		}
 		resizeTimer = setTimeout(resize, 100);
-		if(parentResizeFunction){
-			parentResizeFunction();
-		}
 	});
 	
 	function resize(){
