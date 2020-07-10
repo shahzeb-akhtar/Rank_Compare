@@ -45,7 +45,7 @@ Given JSON array of object with the following properties, it creates an interact
     ├── d3-v4.js                        # d3 v4 file
     ├── RankCompare.js                  # Main JS code for rank comparison chart creation
 ├── screen_shots                        # Folder to hold screen shots
-    ├── rank_compare.png                # Screen shot of created bar chart
+    ├── rank_compare.png                # Screen shot of created chart
 ├── index.html                          # Index HTML file (creates comparison chart for Programming Languages)
 ├── database.html                       # Databases comparison chart HTML file
 ├── platform.html                       # Plaftforms comparison chart HTML file
